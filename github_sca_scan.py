@@ -1,6 +1,7 @@
 #!/usr/bin/env python3
 # A simple script for iterating through and scanning all repos with sourceclear
 # run python3 github_sca_scan.py `github_username`
+# so for my user I run 'python3 github_sca_scan.py nmichalov'
 # machine must have an active srcclr agent since it just invokes a command line call
 
 import requests, os, sys
