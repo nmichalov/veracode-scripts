@@ -1,16 +1,17 @@
 #!/usr/bin/env python3
 # A simple script for iterating through and scanning all repos with sourceclear
-# run python3 github_sca_scan.py `github_username`
-# so for my user I run 'python3 github_sca_scan.py nmichalov'
+# run python3 github_sca_scan.py `github_username` 'oauth_token'
+# so for my user I run 'python3 github_sca_scan.py nmichalov `token` '
 # machine must have an active srcclr agent since it just invokes a command line call
 
 import requests, os, sys
 
 def main():
+    authorization_header = {"Authorization": f'token {sys.argv[2]}'} # get oauth2 token to authenticate
     # use the below request to scan by username
-    r = requests.get(f'https://api.github.com/users/{sys.argv[1]}/repos')   # request a list of user's repos from the github API
+    #r = requests.get(f'https://api.github.com/users/{sys.argv[1]}/repos', headers=authorization_header)   # request a list of user's repos from the github API
     # use the below request to scan by organization
-    # r = requests.get(f'https://api.github.com/orgs/{sys.argv[1]}/repos')
+    r = requests.get(f'https://api.github.com/orgs/{sys.argv[1]}/repos', headers=authorization_header)
     raw_data = r.json()             # extract JSON containing repo data from the request reciev
     for repo in raw_data:           # loop through the JSON
         url = repo['html_url']      # get the html url for each of the repos
